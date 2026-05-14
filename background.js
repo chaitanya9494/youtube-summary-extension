@@ -39,7 +39,7 @@ async function isPremium() {
 }
 
 // Call Gemini API
-async function callGemini(prompt, model = "gemini-2.0-flash-lite") {
+async function callGemini(prompt, model = "gemini-3.1-flash-lite") {
   const apiKey = await getApiKey();
   if (!apiKey) {
     throw new Error("API key not set. Go to extension settings.");
@@ -66,7 +66,7 @@ async function callGemini(prompt, model = "gemini-2.0-flash-lite") {
 }
 
 // Call Gemini with YouTube video URL (native video understanding)
-async function callGeminiWithVideo(videoUrl, prompt, model = "gemini-2.0-flash-lite") {
+async function callGeminiWithVideo(videoUrl, prompt, model = "gemini-3.1-flash-lite") {
   const apiKey = await getApiKey();
   if (!apiKey) {
     throw new Error("API key not set. Go to extension settings.");

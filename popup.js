@@ -304,7 +304,7 @@ elements.btnSubscribe.addEventListener("click", () => {
 // Feedback
 elements.feedbackLink.addEventListener("click", (e) => {
   e.preventDefault();
-  chrome.tabs.create({ url: "https://t.me/YourBotUsername" });
+  chrome.tabs.create({ url: "https://t.me/smart_video_summary_bot" });
 });
 
 // Utility

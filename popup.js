@@ -24,7 +24,6 @@ const elements = {
   quizContainer: document.getElementById("quizContainer"),
   settingsLink: document.getElementById("settingsLink"),
   feedbackLink: document.getElementById("feedbackLink"),
-  apiKeyInput: document.getElementById("apiKeyInput"),
   langSelect: document.getElementById("langSelect"),
   saveSettings: document.getElementById("saveSettings"),
   cancelSettings: document.getElementById("cancelSettings"),
@@ -50,11 +49,6 @@ async function init() {
   elements.videoTitle.textContent = tab.title?.replace(" - YouTube", "") || "YouTube Video";
 
   const status = await chrome.runtime.sendMessage({ action: "getStatus" });
-
-  if (!status.hasApiKey) {
-    showState("settingsPanel");
-    return;
-  }
 
   if (!status.premium && status.usage >= status.limit) {
     showState("premiumGate");
@@ -282,21 +276,13 @@ elements.btnSpeak.addEventListener("click", () => {
 elements.settingsLink.addEventListener("click", async (e) => {
   e.preventDefault();
   const settings = await chrome.runtime.sendMessage({ action: "getSettings" });
-  elements.apiKeyInput.value = settings.apiKey || "";
   elements.langSelect.value = settings.language || "English";
   showState("settingsPanel");
 });
 
 elements.saveSettings.addEventListener("click", async () => {
-  const key = elements.apiKeyInput.value.trim();
   const lang = elements.langSelect.value;
-
-  if (key) {
-    await chrome.runtime.sendMessage({ action: "setApiKey", key });
-  }
   await chrome.runtime.sendMessage({ action: "setLanguage", language: lang });
-
-  // Go back to main
   init();
 });
 

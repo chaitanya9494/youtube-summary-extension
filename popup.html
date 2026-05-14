@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Study AI</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📚 Video Study AI</h1>
+      <p class="subtitle" id="videoTitle">Open a YouTube video to get started</p>
+    </header>
+
+    <div id="notOnYoutube" class="state">
+      <p>Navigate to a YouTube video and click this extension to summarize it.</p>
+    </div>
+
+    <div id="mainActions" class="state hidden">
+      <div class="usage-bar">
+        <span id="usageText">3/3 free today</span>
+        <a href="#" id="upgradeLink" class="upgrade-link hidden">Upgrade</a>
+      </div>
+
+      <div class="actions">
+        <button id="btnSummary" class="btn btn-primary">📝 Summary</button>
+        <button id="btnFlashcards" class="btn btn-secondary">📋 Flashcards</button>
+        <button id="btnQuiz" class="btn btn-secondary">❓ Quiz</button>
+      </div>
+
+      <div id="result" class="result hidden">
+        <div id="resultContent"></div>
+      </div>
+
+      <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>Generating...</p>
+      </div>
+
+      <div id="quizContainer" class="quiz hidden"></div>
+    </div>
+
+    <div id="premiumGate" class="state hidden">
+      <p>You've used your free summaries for today.</p>
+      <button id="btnSubscribe" class="btn btn-primary">⭐ Get Premium — $5/month</button>
+      <p class="small">Unlimited summaries, flashcards & quizzes</p>
+    </div>
+
+    <footer>
+      <a href="#" id="settingsLink">Settings</a>
+      <span class="separator">•</span>
+      <a href="#" id="feedbackLink">Feedback</a>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

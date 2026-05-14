@@ -110,11 +110,13 @@ async function handleMessage(request) {
     const usage = await getUsage();
     const premium = await isPremium();
     const apiKey = await getApiKey();
+    const { language } = await chrome.storage.sync.get("language");
     return {
       usage,
       limit: FREE_DAILY_LIMIT,
       premium,
       hasApiKey: !!apiKey,
+      language: language || "English",
     };
   }
 
@@ -134,7 +136,10 @@ async function handleMessage(request) {
       }
     }
 
-    const prompt = `Create detailed study notes from this YouTube video. Structure it like the best lecture notes a top student would write.
+    const { language } = await chrome.storage.sync.get("language");
+    const lang = language || "English";
+
+    const prompt = `Create detailed study notes from this YouTube video in ${lang}. Structure it like the best lecture notes a top student would write.
 
 Format your response in clean HTML (no code fences, just the HTML):
 
@@ -157,7 +162,9 @@ Format your response in clean HTML (no code fences, just the HTML):
 </ul>
 
 <h3>💡 Key Takeaway</h3>
-<p>One sentence summary of the most important thing to remember</p>`;
+<p>One sentence summary of the most important thing to remember</p>
+
+Do NOT use LaTeX or math delimiters. Write numbers and symbols as plain text.`;
 
     const result = await callGeminiWithVideo(request.videoUrl, prompt);
     await incrementUsage();
@@ -173,7 +180,10 @@ Format your response in clean HTML (no code fences, just the HTML):
       }
     }
 
-    const prompt = `Generate exactly 5 flashcards from this YouTube video.
+    const { language } = await chrome.storage.sync.get("language");
+    const lang = language || "English";
+
+    const prompt = `Generate exactly 5 flashcards from this YouTube video in ${lang}.
 Return ONLY valid JSON (no markdown, no code fences):
 {
   "cards": [
@@ -184,7 +194,8 @@ Return ONLY valid JSON (no markdown, no code fences):
 Rules:
 - Mix question types: definitions, explanations, comparisons
 - Questions test understanding, not just recall
-- Answers are concise (1-2 sentences)`;
+- Answers are concise (1-2 sentences)
+- Do NOT use LaTeX or math delimiters`;
 
     const result = await callGeminiWithVideo(request.videoUrl, prompt);
     await incrementUsage();
@@ -212,7 +223,10 @@ Rules:
       }
     }
 
-    const prompt = `Generate a 5-question multiple choice quiz from this YouTube video.
+    const { language } = await chrome.storage.sync.get("language");
+    const lang = language || "English";
+
+    const prompt = `Generate a 5-question multiple choice quiz from this YouTube video in ${lang}.
 Return ONLY valid JSON (no markdown, no code fences):
 {
   "questions": [
@@ -249,6 +263,44 @@ Rules:
   if (request.action === "setApiKey") {
     await chrome.storage.sync.set({ geminiApiKey: request.key });
     return { success: true };
+  }
+
+  if (request.action === "setLanguage") {
+    await chrome.storage.sync.set({ language: request.language });
+    return { success: true };
+  }
+
+  if (request.action === "getSettings") {
+    const { geminiApiKey, language } = await chrome.storage.sync.get(["geminiApiKey", "language"]);
+    return { apiKey: geminiApiKey || "", language: language || "English" };
+  }
+
+  if (request.action === "ask") {
+    const premium = await isPremium();
+    if (!premium) {
+      const usage = await getUsage();
+      if (usage >= FREE_DAILY_LIMIT) {
+        return { error: "limit_reached" };
+      }
+    }
+
+    const { language } = await chrome.storage.sync.get("language");
+    const lang = language || "English";
+    const question = request.question || "";
+
+    if (!question.trim()) {
+      return { error: "Please enter a question." };
+    }
+
+    const prompt = `Answer the following question about this YouTube video in ${lang}.
+If the answer is NOT in the video, say: "This wasn't covered in the video."
+Keep your answer concise and helpful.
+Do NOT use LaTeX or math delimiters.
+
+Question: ${question}`;
+
+    const result = await callGeminiWithVideo(request.videoUrl, prompt);
+    return { result };
   }
 
   return { error: "Unknown action" };

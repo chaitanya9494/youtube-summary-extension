@@ -252,3 +252,86 @@ footer a:hover { color: #6c5ce7; }
 #premiumGate p {
   margin-bottom: 12px;
 }
+
+/* Second row of action buttons */
+.actions-row2 {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.actions-row2 .btn {
+  flex: 1;
+}
+
+/* Q&A input */
+.ask-container {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ask-container input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+}
+
+.ask-container input:focus {
+  border-color: #6c5ce7;
+}
+
+.btn-small {
+  padding: 8px 14px;
+  flex: none;
+}
+
+/* Settings panel */
+#settingsPanel h2 {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.setting-group {
+  margin-bottom: 16px;
+}
+
+.setting-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 6px;
+}
+
+.setting-group input,
+.setting-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+}
+
+.setting-group input:focus,
+.setting-group select:focus {
+  border-color: #6c5ce7;
+}
+
+.setting-group a {
+  color: #6c5ce7;
+  text-decoration: none;
+}
+
+.setting-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.setting-actions .btn {
+  flex: 1;
+}

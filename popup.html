@@ -29,13 +29,24 @@
         <button id="btnQuiz" class="btn btn-secondary">❓ Quiz</button>
       </div>
 
+      <div class="actions-row2">
+        <button id="btnAsk" class="btn btn-secondary">💬 Ask</button>
+        <button id="btnSpeak" class="btn btn-secondary">🔊 Listen</button>
+      </div>
+
+      <!-- Q&A input -->
+      <div id="askContainer" class="ask-container hidden">
+        <input type="text" id="askInput" placeholder="Ask anything about this video..." />
+        <button id="askSubmit" class="btn btn-primary btn-small">Ask</button>
+      </div>
+
       <div id="result" class="result hidden">
         <div id="resultContent"></div>
       </div>
 
       <div id="loading" class="loading hidden">
         <div class="spinner"></div>
-        <p>Generating...</p>
+        <p id="loadingText">Generating...</p>
       </div>
 
       <div id="quizContainer" class="quiz hidden"></div>
@@ -45,6 +56,48 @@
       <p>You've used your free summaries for today.</p>
       <button id="btnSubscribe" class="btn btn-primary">⭐ Get Premium — $5/month</button>
       <p class="small">Unlimited summaries, flashcards & quizzes</p>
+    </div>
+
+    <!-- Settings panel -->
+    <div id="settingsPanel" class="state hidden">
+      <h2>⚙️ Settings</h2>
+
+      <div class="setting-group">
+        <label for="apiKeyInput">Gemini API Key</label>
+        <input type="password" id="apiKeyInput" placeholder="Enter your API key" />
+        <p class="small">Get one free at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a></p>
+      </div>
+
+      <div class="setting-group">
+        <label for="langSelect">Summary Language</label>
+        <select id="langSelect">
+          <option value="English">English</option>
+          <option value="Spanish">Spanish</option>
+          <option value="French">French</option>
+          <option value="German">German</option>
+          <option value="Portuguese">Portuguese</option>
+          <option value="Arabic">Arabic</option>
+          <option value="Hindi">Hindi</option>
+          <option value="Chinese">Chinese</option>
+          <option value="Japanese">Japanese</option>
+          <option value="Korean">Korean</option>
+          <option value="Russian">Russian</option>
+          <option value="Italian">Italian</option>
+          <option value="Turkish">Turkish</option>
+          <option value="Dutch">Dutch</option>
+          <option value="Polish">Polish</option>
+          <option value="Urdu">Urdu</option>
+          <option value="Bengali">Bengali</option>
+          <option value="Tamil">Tamil</option>
+          <option value="Telugu">Telugu</option>
+          <option value="Indonesian">Indonesian</option>
+        </select>
+      </div>
+
+      <div class="setting-actions">
+        <button id="saveSettings" class="btn btn-primary">Save</button>
+        <button id="cancelSettings" class="btn btn-secondary">Back</button>
+      </div>
     </div>
 
     <footer>
